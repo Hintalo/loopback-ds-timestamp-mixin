@@ -33,16 +33,16 @@ export default (Model, bootOptions = {}) => {
   const createdAtProps = Object.assign({
     type: Date,
     required: options.required,
-    defaultFn: 'now'
+    defaultFn: 'now',
   }, options.createdAtModelConfig ? options.createdAtModelConfig : {});
-  
+
   Model.defineProperty(options.createdAt, createdAtProps);
 
   const updatedAtProps = Object.assign({
     type: Date,
-    required: options.required
+    required: options.required,
   }, options.updatedAtModelConfig ? options.updatedAtModelConfig : {});
-  
+
   Model.defineProperty(options.updatedAt, updatedAtProps);
 
   Model.observe('before save', (ctx, next) => {
