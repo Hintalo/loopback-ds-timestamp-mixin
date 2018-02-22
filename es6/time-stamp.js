@@ -30,16 +30,20 @@ export default (Model, bootOptions = {}) => {
           validation is turned on and time stamps are required`);
   }
 
-  Model.defineProperty(options.createdAt, {
+  const createdAtProps = Object.assign({
     type: Date,
     required: options.required,
-    defaultFn: 'now',
-  });
+    defaultFn: 'now'
+  }, options.createdAtModelConfig ? options.createdAtModelConfig : {});
+  
+  Model.defineProperty(options.createdAt, createdAtProps);
 
-  Model.defineProperty(options.updatedAt, {
+  const updatedAtProps = Object.assign({
     type: Date,
-    required: options.required,
-  });
+    required: options.required
+  }, options.updatedAtModelConfig ? options.updatedAtModelConfig : {});
+  
+  Model.defineProperty(options.updatedAt, updatedAtProps);
 
   Model.observe('before save', (ctx, next) => {
     debug('ctx.options', ctx.options);
